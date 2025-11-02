@@ -1,11 +1,12 @@
-import { IsString, IsNotEmpty, IsOptional, IsDateString, IsMongoId, IsISBN } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsDateString, IsMongoId } from 'class-validator';
+import { IsISBNCustom } from 'src/common/validators/isbn.validator';
 
 export class CreateBookDto {
   @IsString()
   @IsNotEmpty()
   title: string;
 
-  @IsISBN()
+  @IsISBNCustom()
   @IsNotEmpty()
   isbn: string;
 
