@@ -1,0 +1,858 @@
+{
+	"info": {
+		"_postman_id": "12345678-1234-1234-1234-123456789abc",
+		"name": "Book Management System API",
+		"description": "Complete API collection for Book Management System with all CRUD operations for Authors and Books",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authors",
+			"item": [
+				{
+					"name": "Create Author",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"George\",\n  \"lastName\": \"Orwell\",\n  \"bio\": \"English novelist and essayist, journalist and critic\",\n  \"birthDate\": \"1903-06-25\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authors"
+							]
+						},
+						"description": "Creates a new author. All fields except bio and birthDate are required."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Authors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authors"
+							]
+						},
+						"description": "Retrieves all authors with pagination support."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Authors (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authors?page=1&limit=5",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authors"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						},
+						"description": "Get authors with pagination. Default: page=1, limit=10"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Authors by First Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authors?firstName=George",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authors"
+							],
+							"query": [
+								{
+									"key": "firstName",
+									"value": "George"
+								}
+							]
+						},
+						"description": "Search authors by first name (partial match, case-insensitive)"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Authors by Last Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authors?lastName=Orwell",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authors"
+							],
+							"query": [
+								{
+									"key": "lastName",
+									"value": "Orwell"
+								}
+							]
+						},
+						"description": "Search authors by last name (partial match, case-insensitive)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Author by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authors/{{authorId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authors",
+								"{{authorId}}"
+							]
+						},
+						"description": "Get a single author by their ID. Replace {{authorId}} with actual UUID."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Author",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bio\": \"Updated biography - English novelist, essayist, journalist and critic. Best known for Animal Farm and 1984.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/authors/{{authorId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authors",
+								"{{authorId}}"
+							]
+						},
+						"description": "Update an author. All fields are optional. Only send fields you want to update."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Author",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/authors/{{authorId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authors",
+								"{{authorId}}"
+							]
+						},
+						"description": "Delete an author. Returns 204 No Content on success. Will fail if author has associated books."
+					},
+					"response": []
+				}
+			],
+			"description": "All endpoints related to Author management"
+		},
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "Create Book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"1984\",\n  \"isbn\": \"978-0-452-28423-4\",\n  \"publishedDate\": \"1949-06-08\",\n  \"genre\": \"Dystopian Fiction\",\n  \"authorId\": \"{{authorId}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/books",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books"
+							]
+						},
+						"description": "Creates a new book. Requires valid authorId. ISBN must be unique."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/books",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books"
+							]
+						},
+						"description": "Retrieves all books with their author information."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Books (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/books?page=1&limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get books with pagination. Default: page=1, limit=10"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Books by Title",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/books?title=1984",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "1984"
+								}
+							]
+						},
+						"description": "Search books by title (partial match, case-insensitive)"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Books by ISBN",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/books?isbn=978-0-452",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "isbn",
+									"value": "978-0-452"
+								}
+							]
+						},
+						"description": "Search books by ISBN (partial match, case-insensitive)"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Books by Author",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/books?authorId={{authorId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books"
+							],
+							"query": [
+								{
+									"key": "authorId",
+									"value": "{{authorId}}"
+								}
+							]
+						},
+						"description": "Filter books by author ID (exact match)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/books/{{bookId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books",
+								"{{bookId}}"
+							]
+						},
+						"description": "Get a single book by ID with full author information."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Book",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"genre\": \"Science Fiction\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/books/{{bookId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books",
+								"{{bookId}}"
+							]
+						},
+						"description": "Update a book. All fields are optional except authorId (cannot be changed). Only send fields you want to update."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/books/{{bookId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"books",
+								"{{bookId}}"
+							]
+						},
+						"description": "Delete a book. Returns 204 No Content on success."
+					},
+					"response": []
+				}
+			],
+			"description": "All endpoints related to Book management"
+		},
+		{
+			"name": "Test Scenarios",
+			"item": [
+				{
+					"name": "Complete Workflow",
+					"item": [
+						{
+							"name": "1. Create Author (J.K. Rowling)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Author created successfully\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('id');",
+											"    pm.expect(jsonData.firstName).to.eql('J.K.');",
+											"    pm.collectionVariables.set('authorId', jsonData.id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"J.K.\",\n  \"lastName\": \"Rowling\",\n  \"bio\": \"British author, best known for Harry Potter series\",\n  \"birthDate\": \"1965-07-31\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/authors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"authors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2. Create Book (Harry Potter)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Book created with author info\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('id');",
+											"    pm.expect(jsonData.author.firstName).to.eql('J.K.');",
+											"    pm.collectionVariables.set('bookId', jsonData.id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Harry Potter and the Philosopher's Stone\",\n  \"isbn\": \"978-0-7475-3269-9\",\n  \"publishedDate\": \"1997-06-26\",\n  \"genre\": \"Fantasy\",\n  \"authorId\": \"{{authorId}}\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/books",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"books"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3. Get Book by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Book includes author details\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.author).to.have.property('firstName');",
+											"    pm.expect(jsonData.author).to.have.property('lastName');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/books/{{bookId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"books",
+										"{{bookId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4. Update Book Genre",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Genre updated\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.genre).to.eql('Young Adult Fantasy');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"genre\": \"Young Adult Fantasy\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/books/{{bookId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"books",
+										"{{bookId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "5. Get Books by Author",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Returns paginated results\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('data');",
+											"    pm.expect(jsonData).to.have.property('total');",
+											"    pm.expect(jsonData.data.length).to.be.above(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/books?authorId={{authorId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"books"
+									],
+									"query": [
+										{
+											"key": "authorId",
+											"value": "{{authorId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "6. Delete Book",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/books/{{bookId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"books",
+										"{{bookId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "7. Delete Author",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/authors/{{authorId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"authors",
+										"{{authorId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Complete workflow testing all CRUD operations in sequence"
+				},
+				{
+					"name": "Error Scenarios",
+					"item": [
+						{
+							"name": "Create Author - Invalid Data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Returns validation error\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.have.property('message');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstName\": \"John\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/authors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"authors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Book - Non-existent Author",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Returns error message\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.message).to.include('does not exist');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Test Book\",\n  \"isbn\": \"978-1-234-56789-0\",\n  \"genre\": \"Fiction\",\n  \"authorId\": \"00000000-0000-0000-0000-000000000000\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/books",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"books"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Non-existent Author",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"pm.test(\"Returns not found error\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.statusCode).to.eql(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/authors/00000000-0000-0000-0000-000000000000",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"authors",
+										"00000000-0000-0000-0000-000000000000"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Test various error scenarios and validation"
+				}
+			],
+			"description": "Pre-configured test scenarios with automated tests"
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "authorId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "bookId",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
